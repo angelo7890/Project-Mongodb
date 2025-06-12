@@ -17,28 +17,29 @@ public class OrderRepository:IOrderRepository
         _orders = database.GetCollection<OrderModel>("orders");
     }
     
-    public Task<List<OrderModel>> GetAllAsync()
+    public async Task<List<OrderModel>> GetAllAsync()
     {
-        throw new NotImplementedException();
+        return await _orders.Find(_ => true).ToListAsync();
     }
 
-    public Task<OrderModel?> GetByIdAsync(string id)
+    public async Task<OrderModel?> GetByIdAsync(string id)
     {
-        throw new NotImplementedException();
+        return await _orders.Find(x => x.id == id).FirstOrDefaultAsync();
     }
 
-    public Task CreateAsync(OrderModel order)
+    public async Task CreateAsync(OrderModel order)
     {
-        throw new NotImplementedException();
+        await _orders.InsertOneAsync(order);
     }
 
-    public Task UpdateAsync(string id, OrderModel order)
+    public async Task UpdateAsync(string id, OrderModel order)
     {
-        throw new NotImplementedException();
+        order.id = id; 
+        await _orders.ReplaceOneAsync(x => x.id == id, order);
     }
 
-    public Task DeleteAsync(string id)
+    public async Task DeleteAsync(string id)
     {
-        throw new NotImplementedException();
+        await _orders.DeleteOneAsync(x => x.id == id);
     }
 }

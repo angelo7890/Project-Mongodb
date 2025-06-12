@@ -17,28 +17,30 @@ public class ItemRepository: IItemRepository
         _items = database.GetCollection<ItemModel>("items");
     }
     
-    public Task<List<ItemModel>> GetAllAsync()
+    public async Task<List<ItemModel>> GetAllAsync()
     {
-        throw new NotImplementedException();
+        return await _items.Find(_ => true).ToListAsync();
     }
 
-    public Task<ItemModel?> GetByIdAsync(string id)
+    public async Task<ItemModel?> GetByIdAsync(string id)
     {
-        throw new NotImplementedException();
+        return await _items.Find(x => x.id == id).FirstOrDefaultAsync();
     }
 
-    public Task CreateAsync(ItemModel item)
+    public async Task CreateAsync(ItemModel item)
     {
-        throw new NotImplementedException();
+        await _items.InsertOneAsync(item);
     }
 
-    public Task UpdateAsync(string id, ItemModel item)
+    public async Task UpdateAsync(string id, ItemModel item)
     {
-        throw new NotImplementedException();
+       item.id = id;
+       await _items.ReplaceOneAsync(x => x.id == id, item);
+       
     }
 
-    public Task DeleteAsync(string id)
+    public async Task DeleteAsync(string id)
     {
-        throw new NotImplementedException();
+        await _items.DeleteOneAsync(x => x.id == id);
     }
 }

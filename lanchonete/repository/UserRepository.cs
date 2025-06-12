@@ -17,28 +17,29 @@ public class UserRepository:  IUserRepository
         _users = database.GetCollection<UserModel>("users");
     }
     
-    public Task<List<UserModel>> GetAllAsync()
+    public async Task<List<UserModel>> GetAllAsync()
     {
-        throw new NotImplementedException();
+        return await _users.Find(user => true).ToListAsync();
     }
 
-    public Task<UserModel?> GetByIdAsync(string id)
+    public async Task<UserModel?> GetByIdAsync(string id)
     {
-        throw new NotImplementedException();
+        return await _users.Find(user => user.id == id).FirstOrDefaultAsync();
     }
 
-    public Task CreateAsync(UserModel user)
+    public async Task CreateAsync(UserModel user)
     {
-        throw new NotImplementedException();
+        await _users.InsertOneAsync(user);
     }
 
-    public Task UpdateAsync(string id, UserModel user)
+    public async Task UpdateAsync(string id, UserModel user)
     {
-        throw new NotImplementedException();
+        user.id = id;
+        await _users.ReplaceOneAsync(u => u.id == id, user);
     }
-
-    public Task DeleteAsync(string id)
+    
+    public async Task DeleteAsync(string id)
     {
-        throw new NotImplementedException();
+        await _users.DeleteOneAsync(user => user.id == id);
     }
 }

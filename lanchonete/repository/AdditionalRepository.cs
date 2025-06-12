@@ -17,28 +17,29 @@ public class AdditionalRepository: IAdditionalRepository
         _additional = database.GetCollection<AdditionalModel>("additional");
     }
 
-    public Task<List<AdditionalModel>> GetAllAsync()
+    public async  Task<List<AdditionalModel>> GetAllAsync()
     {
-        throw new NotImplementedException();
+        return await _additional.Find(_=>true).ToListAsync();
     }
 
-    public Task<AdditionalModel?> GetByIdAsync(string id)
+    public async Task<AdditionalModel?> GetByIdAsync(string id)
     {
-        throw new NotImplementedException();
+        return await _additional.Find(x => x.id == id).FirstOrDefaultAsync();
     }
 
-    public Task CreateAsync(AdditionalModel additional)
+    public async Task CreateAsync(AdditionalModel additional)
     {
-        throw new NotImplementedException();
+        await _additional.InsertOneAsync(additional);
     }
 
-    public Task UpdateAsync(string id, AdditionalModel additional)
+    public async Task UpdateAsync(string id, AdditionalModel additional)
     {
-        throw new NotImplementedException();
+        additional.id = id;
+        await _additional.ReplaceOneAsync(x => x.id == id, additional);
     }
 
-    public Task DeleteAsync(string id)
+    public async Task DeleteAsync(string id)
     {
-        throw new NotImplementedException();
+        await _additional.DeleteOneAsync(x => x.id == id);
     }
 }
