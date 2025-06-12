@@ -17,9 +17,13 @@ public class UserRepository:  IUserRepository
         _users = database.GetCollection<UserModel>("users");
     }
     
-    public async Task<List<UserModel>> GetAllAsync()
+    public async Task<List<UserModel>> GetAllAsync(int  pageNumber, int pageSize)
     {
-        return await _users.Find(user => true).ToListAsync();
+        return await _users
+            .Find(_ => true)
+            .Skip((pageNumber - 1) * pageSize)
+            .Limit(pageSize)
+            .ToListAsync();
     }
 
     public async Task<UserModel?> GetByIdAsync(string id)

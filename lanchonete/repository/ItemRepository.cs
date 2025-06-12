@@ -17,9 +17,14 @@ public class ItemRepository: IItemRepository
         _items = database.GetCollection<ItemModel>("items");
     }
     
-    public async Task<List<ItemModel>> GetAllAsync()
+    public async Task<List<ItemModel>> GetAllAsync(int pageNumber, int pageSize)
     {
-        return await _items.Find(_ => true).ToListAsync();
+
+        return await _items
+            .Find(_ => true)
+            .Skip((pageNumber - 1) * pageSize)
+            .Limit(pageSize)
+            .ToListAsync();
     }
 
     public async Task<ItemModel?> GetByIdAsync(string id)

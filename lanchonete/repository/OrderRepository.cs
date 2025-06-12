@@ -17,9 +17,13 @@ public class OrderRepository:IOrderRepository
         _orders = database.GetCollection<OrderModel>("orders");
     }
     
-    public async Task<List<OrderModel>> GetAllAsync()
+    public async Task<List<OrderModel>> GetAllAsync(int pageNumber, int pageSize)
     {
-        return await _orders.Find(_ => true).ToListAsync();
+        return await _orders
+            .Find(_ => true)
+            .Skip((pageNumber - 1) * pageSize)
+            .Limit(pageSize)
+            .ToListAsync();
     }
 
     public async Task<OrderModel?> GetByIdAsync(string id)

@@ -17,9 +17,13 @@ public class AdditionalRepository: IAdditionalRepository
         _additional = database.GetCollection<AdditionalModel>("additional");
     }
 
-    public async  Task<List<AdditionalModel>> GetAllAsync()
+    public async  Task<List<AdditionalModel>> GetAllAsync(int pageNumber, int pageSize)
     {
-        return await _additional.Find(_=>true).ToListAsync();
+        return await _additional
+            .Find(_ => true)
+            .Skip((pageNumber - 1) * pageSize)
+            .Limit(pageSize)
+            .ToListAsync();
     }
 
     public async Task<AdditionalModel?> GetByIdAsync(string id)
