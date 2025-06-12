@@ -1,4 +1,5 @@
 ﻿using lanchonete.configuration;
+using lanchonete.enums;
 using lanchonete.interfaces;
 using lanchonete.model;
 using Microsoft.Extensions.Options;
@@ -36,10 +37,10 @@ public class OrderRepository:IOrderRepository
         await _orders.InsertOneAsync(order);
     }
 
-    public async Task UpdateAsync(string id, OrderModel order)
+    public async Task UpdateAsync(string id, StatusEnum status)
     {
-        order.id = id; 
-        await _orders.ReplaceOneAsync(x => x.id == id, order);
+        var update = Builders<OrderModel>.Update.Set(o => o.status, status);
+        await _orders.UpdateOneAsync(o => o.id == id, update);
     }
 
     public async Task DeleteAsync(string id)
