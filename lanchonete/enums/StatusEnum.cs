@@ -1,5 +1,8 @@
-﻿namespace lanchonete.enums;
+﻿using System.Text.Json.Serialization;
 
+namespace lanchonete.enums;
+
+[JsonConverter(typeof(JsonStringEnumConverter))]
 public enum StatusEnum
 {
     CRIADO,

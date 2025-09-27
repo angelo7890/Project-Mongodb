@@ -17,11 +17,14 @@ builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddScoped<IAdditionalRepository, AdditionalRepository>();
 builder.Services.AddScoped<IItemRepository,  ItemRepository>();
 builder.Services.AddScoped<IOrderRepository,  OrderRepository>();
+builder.Services.AddScoped<IAggregationInterface,  AggregationsRepository>();
+
 
 builder.Services.AddScoped<AdditionalService>();
 builder.Services.AddScoped<ItemService>();
 builder.Services.AddScoped<OrderService>();
 builder.Services.AddScoped<UserService>();
+builder.Services.AddScoped<AggregationsService>();
 
 
 var app = builder.Build();

@@ -15,9 +15,8 @@ public class UserService
     }
 
     public async Task createUser(RequestCreateUserDto dto)
-    {
-        await userRepository.CreateAsync(new UserModel(dto.name, dto.address));
-    }
+       => await userRepository.CreateAsync(new UserModel(dto.name, dto.address));
+    
 
     public async Task<ResponseUserDto> getUserById(string id)
     {

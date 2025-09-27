@@ -15,9 +15,8 @@ public class ItemService
     }
 
     public async Task createItem(RequestCreateItemDto dto)
-    {
-        await _itemRepository.CreateAsync(new ItemModel(dto.name, dto.description, dto.category, dto.price));
-    }
+       => await _itemRepository.CreateAsync(new ItemModel(dto.name, dto.description, dto.category, dto.price));
+    
 
     public async Task<ResponseItemDto> getItemById(string id)
     {

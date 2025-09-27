@@ -15,9 +15,9 @@ public class AdditionalService
     }
 
     public async Task createAdditional(RequestCreateAdditionalDto dto)
-    {
-        await _additionalRepository.CreateAsync(new AdditionalModel(dto.name, dto.price));
-    }
+    
+    =>  await _additionalRepository.CreateAsync(new AdditionalModel(dto.name, dto.price));
+    
 
     public async Task<ResponseAdditionalDto> getAdditionalById(string id)
     {

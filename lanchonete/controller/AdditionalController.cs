@@ -27,8 +27,8 @@ public class AdditionalController: ControllerBase
     [Route("{id}")]
     public async Task<ActionResult> getAdditionalById(string id)
     {
-        await _additionalService.getAdditionalById(id);
-        return Ok();
+        var additional = await _additionalService.getAdditionalById(id);
+        return Ok(additional);
     }
 
     [HttpGet]
